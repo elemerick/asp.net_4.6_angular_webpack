@@ -1,0 +1,48 @@
+{
+    "compileOnSave": false,
+    "compilerOptions": {
+        "outDir": "./dist/out-tsc",
+        "allowJs": false,
+        "target": "es5",
+        "module": "es2015",
+        "moduleResolution": "node",
+        "baseUrl": "",
+        "declaration": false,
+        "noImplicitAny": true,
+        "removeComments": false,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "suppressImplicitAnyIndexErrors":true,
+        "sourceMap": true,
+        "pretty": true,
+        "allowUnreachableCode": false,
+        "allowUnusedLabels": false,
+        "noImplicitReturns": true,
+        "noImplicitUseStrict": false,
+        "noFallthroughCasesInSwitch": true,
+        "rootDir": "./src",
+        "lib": [
+          "es2016",
+          "dom"
+        ],
+        "typeRoots": ["node_modules/@types"]
+    },
+    "awesomeTypescriptLoaderOptions": {
+      "forkChecker": true,
+      "useWebpackText": true
+    },
+    "include": [
+        "src/**/*"
+    ],
+    "exclude": [
+        "node_modules",
+        "images",
+        "css",
+        "**/*.ngfactory.ts",
+        "**/*.shim.ts",
+        "**/*.spec.ts",
+        "src/bootstrap.aot.ts",
+        "src/test.ts",
+        "src/vendor.ts"
+    ]
+}

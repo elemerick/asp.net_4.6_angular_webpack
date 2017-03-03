@@ -35,3 +35,27 @@ jspm_packages
 
 # Optional REPL history
 .node_repl_history
+
+###################
+# compiled source #
+###################
+*.com
+*.class
+*.dll
+*.exe
+*.pdb
+*.dll.config
+*.cache
+*.suo
+
+###############
+# Directories #
+###############
+bin
+obj
+TestResults
+dist
+packages
+client
+
+
