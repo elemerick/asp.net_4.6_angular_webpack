@@ -26,6 +26,7 @@
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
     <TypeScriptToolsVersion>2.2</TypeScriptToolsVersion>
+    <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -111,12 +112,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="client\app-52c95801c5ce75029259.js" />
-    <Content Include="client\images\favicon.ico" />
-    <Content Include="client\index.html" />
-    <Content Include="client\manifest-b43f9c287490682ddbb7.js" />
-    <Content Include="client\node-static.js" />
-    <Content Include="client\polyfills-2b1e8373056315c4911c.js" />
     <Content Include="Global.asax" />
     <Content Include="src\css\styles.css" />
     <Content Include="src\images\favicon.ico" />
@@ -141,10 +136,6 @@
     <Content Include=".editorconfig" />
     <Content Include="tslint.json" />
     <Content Include="package.json" />
-    <Content Include="client\app-52c95801c5ce75029259.js.map" />
-    <Content Include="client\manifest-b43f9c287490682ddbb7.js.map" />
-    <Content Include="client\polyfills-2b1e8373056315c4911c.js.map" />
-    <Content Include="client\node-static.js.map" />
     <Content Include="tsconfig.json" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
