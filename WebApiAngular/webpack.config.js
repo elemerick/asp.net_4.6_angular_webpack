@@ -72,8 +72,10 @@ module.exports = {
       }
     }),
     new webpack.optimize.CommonsChunkPlugin({
+      name: [`app`, `polyfills`] // we need this line, because polyfills have to go first before angular chunck
+    }),
+    new webpack.optimize.CommonsChunkPlugin({
       name: `node-static`,
-      filename: `node-static.js`,
       minChunks(module, count) {
         const context = module.context;
         return context && context.indexOf(`node_modules`) >= 0;
@@ -81,15 +83,16 @@ module.exports = {
     }),
     new webpack.optimize.CommonsChunkPlugin({name: `manifest`}), // extract the webpack runtime, which contains references to all bundles and chunks anywhere in the build, into a separate bundle
     // ***********************************async chunks*************************
-    // catch all - anything used in more than one place
-    new webpack.optimize.CommonsChunkPlugin({
-      filename: `node-async.js`,
+    new webpack.optimize.CommonsChunkPlugin({ // catch all - anything used in more than one place
+      name: `node-async`,
       async: `node-async`,
       minChunks(module, count) {
         return count >= 2;
       },
     }),
-    new ExtractTextPlugin({filename: `css/[name].[hash].css`, allChunks: true}), // extracts embedded css as external files, adding cache-busting hash to the filename.
+    new ExtractTextPlugin(
+      { filename: `css/[name].[hash].css`, allChunks: true } // extracts embedded css as external files, adding cache-busting hash to the filename.
+    ),
     new HtmlWebpackPlugin({
       template: `index.html` // Webpack inject scripts and links into index.html
     }),
@@ -97,7 +100,7 @@ module.exports = {
       {from: `./images`, to: `images`}
     ]),
   ],
-  watch: true,
+  watch: NODE_ENV === `development`,
   watchOptions: {
     aggregateTimeout: 2000 // timeout before rebuild in watch mode
   },
