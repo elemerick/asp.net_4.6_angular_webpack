@@ -100,9 +100,9 @@ module.exports = {
       {from: `./images`, to: `images`}
     ]),
   ],
-  watch: NODE_ENV === `development`,
-  watchOptions: {
-    aggregateTimeout: 2000 // timeout before rebuild in watch mode
-  },
+  //watch: NODE_ENV === `development`,
+  //watchOptions: {
+  //  aggregateTimeout: 2000 // timeout before rebuild in watch mode
+  //},
   devtool: `source-map`
 };

@@ -4,8 +4,9 @@
   "description": "QuickStart for angular on asp.net webapi .net framework 4.6 and webpack",
   "scripts": {
 	  "prebuild": "npm run clean",
-	  "build": "./node_modules/.bin/webpack --config webpack.config.js",
-    "wp": "./node_modules/.bin/webpack --config webpack.config.js",
+    "build": "./node_modules/.bin/webpack --config webpack.config.js",
+    "prewp": "npm run clean",
+    "wp": "./node_modules/.bin/webpack --config webpack.config.js --watch --watch-aggregate-timeout 2000",
 	  "rimraf": "./node_modules/.bin/rimraf",
 	  "clean": "npm run rimraf -- ./client/*",
 	  "reset": "npm cache clean && npm run clean && npm run rimraf -- node_modules",
