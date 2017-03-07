@@ -133,6 +133,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
+    <Content Include="src\app\shared\compose-message.component.html" />
     <Content Include="src\css\styles.css" />
     <Content Include="src\images\favicon.ico" />
     <Content Include="src\index.html" />
@@ -169,8 +170,43 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="src\app\admin\admin-dashboard.component.ts" />
+    <TypeScriptCompile Include="src\app\admin\admin-routing.module.ts" />
+    <TypeScriptCompile Include="src\app\admin\admin.component.ts" />
+    <TypeScriptCompile Include="src\app\admin\admin.module.ts" />
+    <TypeScriptCompile Include="src\app\admin\manage-crises.component.ts" />
+    <TypeScriptCompile Include="src\app\admin\manage-heroes.component.ts" />
+    <TypeScriptCompile Include="src\app\app-routing.module.ts" />
     <TypeScriptCompile Include="src\app\app.component.ts" />
     <TypeScriptCompile Include="src\app\app.module.ts" />
+    <TypeScriptCompile Include="src\app\core\core.module.ts" />
+    <TypeScriptCompile Include="src\app\core\services\auth-guard.service.ts" />
+    <TypeScriptCompile Include="src\app\core\services\auth.service.ts" />
+    <TypeScriptCompile Include="src\app\core\services\can-deactivate-guard.service.ts" />
+    <TypeScriptCompile Include="src\app\core\services\dialog.service.ts" />
+    <TypeScriptCompile Include="src\app\core\services\selective-preload-strategy.ts" />
+    <TypeScriptCompile Include="src\app\crisis-center\crisis-center-home.component.ts" />
+    <TypeScriptCompile Include="src\app\crisis-center\crisis-center-routing.module.ts" />
+    <TypeScriptCompile Include="src\app\crisis-center\crisis-center.component.ts" />
+    <TypeScriptCompile Include="src\app\crisis-center\crisis-center.module.ts" />
+    <TypeScriptCompile Include="src\app\crisis-center\crisis-detail-resolver.service.ts" />
+    <TypeScriptCompile Include="src\app\crisis-center\crisis-detail.component.ts" />
+    <TypeScriptCompile Include="src\app\crisis-center\crisis-list.component.ts" />
+    <TypeScriptCompile Include="src\app\crisis-center\crisis.service.ts" />
+    <TypeScriptCompile Include="src\app\heroes\hero-detail.component.ts" />
+    <TypeScriptCompile Include="src\app\heroes\hero-list.component.ts" />
+    <TypeScriptCompile Include="src\app\heroes\hero.service.ts" />
+    <TypeScriptCompile Include="src\app\heroes\heroes-routing.module.ts" />
+    <TypeScriptCompile Include="src\app\heroes\heroes.module.ts" />
+    <TypeScriptCompile Include="src\app\login\login-routing.module.ts" />
+    <TypeScriptCompile Include="src\app\login\login.component.ts" />
+    <TypeScriptCompile Include="src\app\login\login.module.ts" />
+    <TypeScriptCompile Include="src\app\rxjs-operators.ts" />
+    <TypeScriptCompile Include="src\app\shared\animations.ts" />
+    <TypeScriptCompile Include="src\app\shared\api.ts" />
+    <TypeScriptCompile Include="src\app\shared\compose-message.component.ts" />
+    <TypeScriptCompile Include="src\app\shared\not-found.component.ts" />
+    <TypeScriptCompile Include="src\app\shared\shared.module.ts" />
     <TypeScriptCompile Include="src\main.ts" />
     <TypeScriptCompile Include="src\polyfills.ts" />
   </ItemGroup>
