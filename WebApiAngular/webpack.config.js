@@ -16,7 +16,7 @@ module.exports = {
     modules: [path.resolve(__dirname, `src`), `node_modules`],
     extensions: [`.ts`, `.js`, `.css`, `.html`]
   },
-  context: path.join(__dirname, `src`),
+  context: path.join(__dirname, `src`), // make ./src folder as root for building process
   output: {
     path: path.join(__dirname, `client`),
     publicPath: `/`,
@@ -45,8 +45,7 @@ module.exports = {
         use: `file-loader?name=fonts/[name]-[hash].[ext]`
       },
       {
-        // css - The pattern matches application-wide styles
-        // It moves every require("style.css") in entry chunks into a separate css output file.
+        // css - The pattern matches application-wide styles, not Angular ones
         test: /\.css$/,
         exclude: path.join(__dirname, `src`, `app`),
         use: ExtractTextPlugin.extract({ fallbackLoader: `style-loader`, use: [`css-loader?sourceMap`]}) // postcss-loader
@@ -73,7 +72,7 @@ module.exports = {
       }
     }),
     new webpack.optimize.CommonsChunkPlugin({
-      name: [`app`, `polyfills`] // we need this line, because polyfills have to go first before angular chunck
+      name: [`app`, `polyfills`] // we need this line, because polyfills have to go first before angular
     }),
     new webpack.optimize.CommonsChunkPlugin({
       name: `node-static`,

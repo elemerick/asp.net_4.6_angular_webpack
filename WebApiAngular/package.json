@@ -10,7 +10,6 @@
 	  "rimraf": "./node_modules/.bin/rimraf",
 	  "clean": "npm run rimraf -- ./client/*",
 	  "reset": "npm cache clean && npm run clean && npm run rimraf -- node_modules",
-	  "lint":  "tslint ./src/**/*.ts -t verbose",
 	  "tslint": "tslint --type-check --project tsconfig.json",
 	  "start": "webpack-dev-server"
   },
