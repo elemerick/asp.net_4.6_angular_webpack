@@ -9,7 +9,8 @@ const NODE_ENV = process.env.NODE_ENV || `development`;
 module.exports = {
   entry: {
     app: `./main.ts`,
-    polyfills: `./polyfills.ts`
+    polyfills: `./polyfills.ts`,
+    styles: `./css/styles.css`
   },
   resolve: {
     modules: [path.resolve(__dirname, `src`), `node_modules`],
@@ -48,7 +49,7 @@ module.exports = {
         // It moves every require("style.css") in entry chunks into a separate css output file.
         test: /\.css$/,
         exclude: path.join(__dirname, `src`, `app`),
-        loader: ExtractTextPlugin.extract({fallbackLoader: `style-loader`, loader: `css-loader?sourceMap-loader`}) // postcss-loader
+        use: ExtractTextPlugin.extract({ fallbackLoader: `style-loader`, use: [`css-loader?sourceMap`]}) // postcss-loader
       },
       {
         // the second handles component-scoped styles (the ones specified in a component`s styleUrls metadata property)
@@ -100,9 +101,5 @@ module.exports = {
       {from: `./images`, to: `images`}
     ]),
   ],
-  //watch: NODE_ENV === `development`,
-  //watchOptions: {
-  //  aggregateTimeout: 2000 // timeout before rebuild in watch mode
-  //},
   devtool: `source-map`
 };
