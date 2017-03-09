@@ -138,6 +138,8 @@
     <Content Include="tslint.json" />
     <Content Include="package.json" />
     <Content Include="tsconfig.json" />
+    <Content Include=".eslintrc" />
+    <Content Include=".eslintignore" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

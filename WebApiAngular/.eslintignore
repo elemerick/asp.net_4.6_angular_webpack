@@ -1,0 +1,5 @@
+/aot/**
+/dist/**
+/documentation/**
+/client/**
+/node_modules/**
