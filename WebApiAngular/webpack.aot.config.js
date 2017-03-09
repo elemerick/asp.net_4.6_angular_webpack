@@ -3,8 +3,8 @@ const webpack = require(`webpack`);
 const ExtractTextPlugin = require(`extract-text-webpack-plugin`);
 const HtmlWebpackPlugin = require(`html-webpack-plugin`);
 const CopyWebpackPlugin = require(`copy-webpack-plugin`);
-const ngtools = require(`@ngtools/webpack`);
-const aotLoader = require('@ultimate/aot-loader');
+// const ngtools = require(`@ngtools/webpack`);
+const aotLoader = require(`@ultimate/aot-loader`);
 
 const NODE_ENV = process.env.NODE_ENV || `development`;
 
@@ -30,8 +30,8 @@ module.exports = {
     rules: [
       {
         test: /\.ts$/,
-        //use: `@ngtools/webpack`,
-        use: ['@ultimate/aot-loader'],
+        // use: `@ngtools/webpack`,
+        use: [`@ultimate/aot-loader`],
         exclude: [/\.(spec|e2e)\.ts$/]
       },
       {
@@ -50,7 +50,7 @@ module.exports = {
         // css - The pattern matches application-wide styles, not Angular ones
         test: /\.css$/,
         exclude: path.join(__dirname, `src`, `app`),
-        use: ExtractTextPlugin.extract({ fallback: `style-loader`, use: [`css-loader?sourceMap`]}) // postcss-loader
+        use: ExtractTextPlugin.extract({fallback: `style-loader`, use: [`css-loader?sourceMap`]}) // postcss-loader
       },
       {
         // the second handles component-scoped styles (the ones specified in a component`s styleUrls metadata property)
@@ -94,13 +94,13 @@ module.exports = {
       },
     }),
     new ExtractTextPlugin(
-      { filename: `css/[name].[hash].css`, allChunks: true } // extracts embedded css as external files, adding cache-busting hash to the filename.
+      {filename: `css/[name].[hash].css`, allChunks: true} // extracts embedded css as external files, adding cache-busting hash to the filename.
     ),
     new HtmlWebpackPlugin({
       template: `index.html` // Webpack inject scripts and links into index.html
     }),
     new CopyWebpackPlugin([ // Copy files and directories in webpack.
-      { from: `./images`, to: `images` }
+      {from: `./images`, to: `images`}
     ]),
     // new ngtools.AotPlugin({
     //   mainPath: `main.ts`,
