@@ -3,10 +3,10 @@ const webpack = require(`webpack`);
 const ExtractTextPlugin = require(`extract-text-webpack-plugin`);
 const HtmlWebpackPlugin = require(`html-webpack-plugin`);
 const CopyWebpackPlugin = require(`copy-webpack-plugin`);
-const ngtools = require(`@ngtools/webpack`);
 const aotLoader = require('@ultimate/aot-loader');
+const SriPlugin = require(`webpack-subresource-integrity`);
 
-const NODE_ENV = process.env.NODE_ENV || `development`;
+const NODE_ENV = `production`;
 
 module.exports = {
   entry: {
@@ -24,13 +24,13 @@ module.exports = {
     publicPath: `/`,
     filename: `[name]-[chunkhash].js`,
     library: `[name]`,
-    chunkFilename: `[name]-[chunkhash].chunk.js`
+    chunkFilename: `[name]-[chunkhash].chunk.js`,
+    crossOriginLoading: `anonymous`
   },
   module: {
     rules: [
       {
         test: /\.ts$/,
-        //use: `@ngtools/webpack`,
         use: ['@ultimate/aot-loader'],
         exclude: [/\.(spec|e2e)\.ts$/]
       },
@@ -102,19 +102,28 @@ module.exports = {
     new CopyWebpackPlugin([ // Copy files and directories in webpack.
       { from: `./images`, to: `images` }
     ]),
-    // new ngtools.AotPlugin({
-    //   mainPath: `main.ts`,
-    //   tsConfigPath: `./tsconfig.json`,
-    //   skipCodeGeneration: true,
-    //   exclude: [
-    //     `./src/**/*.spec.ts`,
-    //     `./src/test.ts`
-    //   ],
-    // })
     new aotLoader.AotPlugin({
       tsConfig: `./tsconfig.json`,
       entryModule: `./src/app/app.module#AppModule`
-    })
+    }),
+    new webpack.LoaderOptionsPlugin({ // minifies the bundles
+      minimize: true,
+      debug: false
+    }),
+    new webpack.optimize.UglifyJsPlugin({
+      compress: {
+        screw_ie8: true,
+        warnings: false
+      },
+      output: {
+        comments: false
+      },
+      sourceMap: true
+    }),
+    new SriPlugin({ // the integrity attribute will be set automatically. The crossorigin attribute will be set as well, to the value of output.crossOriginLoading webpack option.
+      hashFuncNames: [`sha256`, `sha384`],
+      enabled: true,
+    }),
   ],
-  devtool: `source-map`
+  devtool: `source-map` // `hidden-source-map`
 };

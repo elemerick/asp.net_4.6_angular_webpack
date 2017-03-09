@@ -5,6 +5,8 @@
   "scripts": {
 	  "prebuild": "npm run clean",
     "build": "./node_modules/.bin/webpack --config webpack.config.js",
+    "prebuild:prod": "npm run clean",
+    "build:prod": "./node_modules/.bin/webpack --config webpack.prod.config.js",
     "prewp": "npm run clean",
     "wp": "./node_modules/.bin/webpack --config webpack.config.js --watch --watch-aggregate-timeout 2000",
     "prewp:aot": "npm run clean",
@@ -14,7 +16,7 @@
 	  "reset": "npm cache clean && npm run clean && npm run rimraf -- node_modules",
 	  "tslint": "tslint --type-check --project tsconfig.json",
 	  "start": "webpack-dev-server",
-    "srcmap": "./node_modules/.bin/source-map-explorer ./client/app-93188fa253ff63fd442a.js"
+    "srcmap": "./node_modules/.bin/source-map-explorer ./client/app-2192ed03b660cab9a475.js"
   },
   "keywords": [],
   "author": "YurlovM",
@@ -69,7 +71,8 @@
     "postcss-loader": "^1.3.3",
     "postcss-url": "^5.1.2",
     "script-loader": "^0.7.0",
-    "url-loader": "^0.5.7"
+    "url-loader": "^0.5.7",
+    "webpack-subresource-integrity": "^0.9.0"
   },
   "repository": {}
 }

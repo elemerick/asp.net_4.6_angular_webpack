@@ -114,6 +114,7 @@
     </Content>
     <Content Include="webpack.aot.config.js" />
     <Content Include="webpack.config.js" />
+    <Content Include="webpack.prod.config.js" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\UnityConfig.cs" />
