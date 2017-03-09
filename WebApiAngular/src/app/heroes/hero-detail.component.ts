@@ -1,9 +1,8 @@
 import { Component, OnInit, HostBinding } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-
 import { slideInDownAnimation } from '../shared/animations';
-
-import { Hero, HeroService }  from './hero.service';
+import { HeroService }  from './hero.service';
+import { Hero } from './hero';
 
 @Component({
   template: `

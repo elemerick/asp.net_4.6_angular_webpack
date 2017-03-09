@@ -2,7 +2,7 @@ import { Component, OnInit, HostBinding } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { slideInDownAnimation }   from '../shared/animations';
-import { Crisis }         from './crisis.service';
+import { Crisis }         from './crisis';
 import { DialogService }  from '../core/services/dialog.service';
 
 @Component({

@@ -1,15 +1,13 @@
-// TODO SOMEDAY: Feature Componetized like CrisisCenter
-import { Observable } from 'rxjs/Observable';
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-
-import { Hero, HeroService }  from './hero.service';
+import { HeroService }  from './hero.service';
+import { Hero } from './hero';
 
 @Component({
   template: `
     <h2>HEROES</h2>
     <ul class="items">
-      <li *ngFor="let hero of heroes | async"
+      <li *ngFor="let hero of heroes"
         [class.selected]="isSelected(hero)"
         (click)="onSelect(hero)">
         <span class="badge">{{ hero.id }}</span> {{ hero.name }}
@@ -20,7 +18,8 @@ import { Hero, HeroService }  from './hero.service';
   `
 })
 export class HeroListComponent implements OnInit {
-  heroes: Observable<Hero[]>;
+  public heroes: Hero[];
+  public errorMessage: string;
 
   private selectedId: number;
 
@@ -31,14 +30,19 @@ export class HeroListComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.heroes = this.route.params
-      .switchMap((params: Params) => {
-        this.selectedId = +params['id'];
-        return this.service.getHeroes();
-      });
+    this.route.params.subscribe(
+      (params: Params) => this.selectedId = +params['id']
+    );
+
+    this.service.getHeroes().subscribe(
+      heroes => this.heroes = heroes,
+      error => this.errorMessage = <any>error
+    );
   }
 
-  isSelected(hero: Hero) { return hero.id === this.selectedId; }
+  isSelected(hero: Hero) {
+    return hero.id === this.selectedId;
+  }
 
   onSelect(hero: Hero) {
     this.router.navigate(['/hero', hero.id]);

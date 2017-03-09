@@ -1,26 +1,22 @@
-import { Injectable } from '@angular/core';
-
-export class Hero {
-  constructor(public id: number, public name: string) { }
-}
-
-let HEROES = [
-  new Hero(11, 'Mr. Nice'),
-  new Hero(12, 'Narco'),
-  new Hero(13, 'Bombasto'),
-  new Hero(14, 'Celeritas'),
-  new Hero(15, 'Magneta'),
-  new Hero(16, 'RubberMan')
-];
-
-let heroesPromise = Promise.resolve(HEROES);
+﻿import { Injectable }     from '@angular/core';
+import { Http, Response } from '@angular/http';
+import { Observable }     from 'rxjs/Observable';
+import { Hero }           from './hero';
+import { API_HEROES }     from '../shared/api';
+import { handleError }    from '../shared/handle-error';
 
 @Injectable()
 export class HeroService {
-  getHeroes() { return heroesPromise; }
+  constructor (private http: Http) {}
+  public getHeroes(): Observable<Hero[]> {
+    return this.http.get(API_HEROES)
+                    .map((res: Response) => res.json())
+                    .catch(handleError);
+  }
 
-  getHero(id: number | string) {
-    return heroesPromise
-      .then(heroes => heroes.find(hero => hero.id === +id));
+  public getHero(id: number | string): Observable<Hero> {
+    return this.http.get(API_HEROES + '/' + id)
+                .map((res: Response) => res.json())
+                .catch(handleError);
   }
 }

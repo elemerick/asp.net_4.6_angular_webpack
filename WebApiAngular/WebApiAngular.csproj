@@ -117,11 +117,17 @@
   <ItemGroup>
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Controllers\ProductsController.cs" />
+    <Compile Include="Controllers\CrisesController.cs" />
+    <Compile Include="Controllers\HeroesController.cs" />
+    <Compile Include="DAL\CrisesRepository.cs" />
+    <Compile Include="DAL\HeroesRepository.cs" />
+    <Compile Include="DAL\ICrisesRepository.cs" />
+    <Compile Include="DAL\IHeroesRepository.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\Product.cs" />
+    <Compile Include="Models\Crises.cs" />
+    <Compile Include="Models\Heroes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

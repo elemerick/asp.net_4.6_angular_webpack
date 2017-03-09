@@ -1,14 +1,12 @@
 import { Component, OnInit }      from '@angular/core';
 import { ActivatedRoute, Router, Params } from '@angular/router';
-
-import { Observable }            from 'rxjs/Observable';
-
-import { Crisis, CrisisService } from './crisis.service';
+import { Crisis }         from './crisis';
+import { CrisisService } from './crisis.service';
 
 @Component({
   template: `
     <ul class="items">
-      <li *ngFor="let crisis of crises | async"
+      <li *ngFor="let crisis of crises"
         (click)="onSelect(crisis)"
         [class.selected]="isSelected(crisis)">
           <span class="badge">{{ crisis.id }}</span>
@@ -20,8 +18,9 @@ import { Crisis, CrisisService } from './crisis.service';
   `
 })
 export class CrisisListComponent implements OnInit {
-  crises: Observable<Crisis[]>;
-  selectedId: number;
+  public crises: Crisis[];
+  public selectedId: number;
+  public errorMessage: string;
 
   constructor(
     private service: CrisisService,
@@ -34,11 +33,14 @@ export class CrisisListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.crises = this.route.params
-      .switchMap((params: Params) => {
-        this.selectedId = +params['id'];
-        return this.service.getCrises();
-      });
+    this.route.params.subscribe(
+      (params: Params) => this.selectedId = +params['id']
+    );
+
+    this.service.getCrises().subscribe(
+      crises => this.crises = crises,
+      error => this.errorMessage = <any>error
+    );
   }
 
   onSelect(crisis: Crisis) {

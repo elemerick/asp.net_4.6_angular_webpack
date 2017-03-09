@@ -1,35 +1,23 @@
-export class Crisis {
-  constructor(public id: number, public name: string) { }
-}
-
-const CRISES = [
-  new Crisis(1, 'Dragon Burning Cities'),
-  new Crisis(2, 'Sky Rains Great White Sharks'),
-  new Crisis(3, 'Giant Asteroid Heading For Earth'),
-  new Crisis(4, 'Procrastinators Meeting Delayed Again'),
-];
-
-let crisesPromise = Promise.resolve(CRISES);
-
-import { Injectable } from '@angular/core';
+import { Injectable }     from '@angular/core';
+import { Http, Response } from '@angular/http';
+import { Observable }     from 'rxjs/Observable';
+import { Crisis }         from './crisis';
+import { API_CRISES }     from '../shared/api';
+import { handleError }    from '../shared/handle-error';
 
 @Injectable()
 export class CrisisService {
-
   static nextCrisisId = 100;
-
-  getCrises() { return crisesPromise; }
-
-  getCrisis(id: number | string) {
-    return crisesPromise
-      .then(crises => crises.find(crisis => crisis.id === +id));
+  constructor (private http: Http) {}
+  public getCrises(): Observable<Crisis[]> {
+    return this.http.get(API_CRISES)
+                    .map((res: Response) => res.json())
+                    .catch(handleError);
   }
 
-  addCrisis(name: string) {
-    name = name.trim();
-    if (name) {
-      let crisis = new Crisis(CrisisService.nextCrisisId++, name);
-      crisesPromise.then(crises => crises.push(crisis));
-    }
+  public getCrisis(id: number | string): Observable<Crisis> {
+    return this.http.get(API_CRISES + '/' + id)
+                .map((res: Response) => res.json())
+                .catch(handleError);
   }
 }
