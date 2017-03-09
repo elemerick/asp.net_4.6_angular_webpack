@@ -3,6 +3,8 @@ const webpack = require(`webpack`);
 const ExtractTextPlugin = require(`extract-text-webpack-plugin`);
 const HtmlWebpackPlugin = require(`html-webpack-plugin`);
 const CopyWebpackPlugin = require(`copy-webpack-plugin`);
+const ngtools = require(`@ngtools/webpack`);
+const aotLoader = require('@ultimate/aot-loader');
 
 const NODE_ENV = process.env.NODE_ENV || `development`;
 
@@ -22,26 +24,27 @@ module.exports = {
     publicPath: `/`,
     filename: `[name]-[chunkhash].js`,
     library: `[name]`,
-    chunkFilename: `[name]-[chunkhash].chunk.js`,
+    chunkFilename: `[name]-[chunkhash].chunk.js`
   },
   module: {
     rules: [
       {
         test: /\.ts$/,
-        use: [`awesome-typescript-loader`, `angular2-template-loader`, `angular-router-loader?loader='system'`],
+        //use: `@ngtools/webpack`,
+        use: ['@ultimate/aot-loader'],
         exclude: [/\.(spec|e2e)\.ts$/]
       },
       {
         test: /\.html$/,
-        use: `raw-loader`
+        use: `raw-loader` // html - for component templates
       },
       {
         test: /\.(png|jpe?g|gif|svg|ico)$/,
-        use: `file-loader?name=images/[name]-[hash].[ext]`
+        use: `file-loader?name=images/[name].[ext]`
       },
       {
         test: /\.(woff|woff2|ttf|eot)$/,
-        use: `file-loader?name=fonts/[name]-[hash].[ext]`
+        use: `file-loader?name=fonts/[name].[ext]`
       },
       {
         // css - The pattern matches application-wide styles, not Angular ones
@@ -67,11 +70,11 @@ module.exports = {
     ),
     new webpack.DefinePlugin({ // use to define environment variables that we can reference within our application.
       'process.env': {
-        'NODE_ENV': JSON.stringify(NODE_ENV)
+        NODE_ENV: JSON.stringify(NODE_ENV)
       }
     }),
     new webpack.optimize.CommonsChunkPlugin({
-      name: [`app`, `polyfills`] // we need this line, because polyfills have to go first before angular
+      name: [`app`, `polyfills`] // we need this line, because polyfills have to go first before angular chunck
     }),
     new webpack.optimize.CommonsChunkPlugin({
       name: `node-static`,
@@ -82,7 +85,8 @@ module.exports = {
     }),
     new webpack.optimize.CommonsChunkPlugin({name: `manifest`}), // extract the webpack runtime, which contains references to all bundles and chunks anywhere in the build, into a separate bundle
     // ***********************************async chunks*************************
-    new webpack.optimize.CommonsChunkPlugin({ // catch all - anything used in more than one place
+    // catch all - anything used in more than one place
+    new webpack.optimize.CommonsChunkPlugin({
       name: `node-async`,
       async: `node-async`,
       minChunks(module, count) {
@@ -98,6 +102,19 @@ module.exports = {
     new CopyWebpackPlugin([ // Copy files and directories in webpack.
       { from: `./images`, to: `images` }
     ]),
+    // new ngtools.AotPlugin({
+    //   mainPath: `main.ts`,
+    //   tsConfigPath: `./tsconfig.json`,
+    //   skipCodeGeneration: true,
+    //   exclude: [
+    //     `./src/**/*.spec.ts`,
+    //     `./src/test.ts`
+    //   ],
+    // })
+    new aotLoader.AotPlugin({
+      tsConfig: `./tsconfig.json`,
+      entryModule: `./src/app/app.module#AppModule`
+    })
   ],
-  devtool: `source-map`
+  devtool: `source-map` // `inline-source-map` // `hidden-source-map`
 };

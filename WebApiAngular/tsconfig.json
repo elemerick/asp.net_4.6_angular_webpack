@@ -20,6 +20,7 @@
         "noImplicitReturns": true,
         "noImplicitUseStrict": false,
         "noFallthroughCasesInSwitch": true,
+        "skipLibCheck": true,
         "rootDir": "./src",
         "lib": [
           "es2016",
@@ -31,6 +32,11 @@
       "forkChecker": true,
       "useWebpackText": true
     },
+    "angularCompilerOptions": {
+      "entryModule": "./src/app/app.module#AppModule",
+      "genDir": "./aot",
+      "skipMetadataEmit" : true
+    },
     "include": [
         "src/**/*"
     ],
@@ -41,8 +47,7 @@
         "**/*.ngfactory.ts",
         "**/*.shim.ts",
         "**/*.spec.ts",
-        "src/bootstrap.aot.ts",
         "src/test.ts",
-        "src/vendor.ts"
+        "src/polyfills.ts"
     ]
 }

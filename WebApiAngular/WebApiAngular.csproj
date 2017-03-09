@@ -112,6 +112,7 @@
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="webpack.aot.config.js" />
     <Content Include="webpack.config.js" />
   </ItemGroup>
   <ItemGroup>
