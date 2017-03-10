@@ -29,6 +29,11 @@ You can build your Angular app by npm scripts commands:
   - npm run e2e ( e2e testing Angular app by protractor)
   - npm run srcmap (you can investigate resulting webpack chuncks, don't forget to change for correct filename)
 
+All routes redirected to Angular app except for /api uri. If you want add additional routes to WebApi add corresponding line in
+Web.config rule named "Angular routes", e.g. 
+ <add input="{REQUEST_URI}" pattern="^/(api)" negate="true"/>
+
+
 # Useful extensions:
 
 For integration webpack builds with Studio building process use  NPM Task Runner https://marketplace.visualstudio.com/items?itemName=MadsKristensen.NPMTaskRunner
