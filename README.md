@@ -31,11 +31,11 @@ You can build your Angular app by npm scripts commands:
 
 # Useful extensions:
 
-To integration webpack builds with Studio building process use  NPM Task Runner https://marketplace.visualstudio.com/items?itemName=MadsKristensen.NPMTaskRunner
+For integration webpack builds with Studio building process use  NPM Task Runner https://marketplace.visualstudio.com/items?itemName=MadsKristensen.NPMTaskRunner
 
-Or you can use WebPack Task Runner https://marketplace.visualstudio.com/items?itemName=MadsKristensen.WebPackTaskRunner
+or you can use WebPack Task Runner https://marketplace.visualstudio.com/items?itemName=MadsKristensen.WebPackTaskRunner
 
-You can use this custom button, which will toggle Webpack's watch mode on and off in Visual Studio 2015 https://github.com/webpack/docs/wiki/Usage-with-Visual-Studio
+Also you can use this custom button, which will toggle Webpack's watch mode on and off in Visual Studio 2015 https://github.com/webpack/docs/wiki/Usage-with-Visual-Studio
 
 You can use https://marketplace.visualstudio.com/items?itemName=MadsKristensen.WebAnalyzer for tslint.
 
