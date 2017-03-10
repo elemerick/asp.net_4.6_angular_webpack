@@ -105,7 +105,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
+    <Content Include="karma.conf.js" />
     <Content Include="postcss.config.js" />
+    <Content Include="protractor.conf.js" />
     <Content Include="src\app\shared\compose-message.component.html" />
     <Content Include="src\css\styles.css" />
     <Content Include="src\images\favicon.ico" />
@@ -141,6 +143,9 @@
     <Content Include="tsconfig.json" />
     <Content Include=".eslintrc" />
     <Content Include=".eslintignore" />
+    <Content Include="e2e\tsconfig.e2e.json" />
+    <Content Include=".angular-cli.json" />
+    <Content Include="tsconfig.spec.json" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -153,6 +158,9 @@
     <Folder Include="client\" />
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="e2e\app.e2e-spec.ts" />
+    <TypeScriptCompile Include="e2e\app.po.ts" />
+    <TypeScriptCompile Include="src\1st.spec.ts" />
     <TypeScriptCompile Include="src\app\admin\admin-dashboard.component.ts" />
     <TypeScriptCompile Include="src\app\admin\admin-routing.module.ts" />
     <TypeScriptCompile Include="src\app\admin\admin.component.ts" />
@@ -192,6 +200,7 @@
     <TypeScriptCompile Include="src\app\shared\shared.module.ts" />
     <TypeScriptCompile Include="src\main.ts" />
     <TypeScriptCompile Include="src\polyfills.ts" />
+    <TypeScriptCompile Include="src\test.ts" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
