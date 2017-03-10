@@ -35,6 +35,8 @@ Web.config rule named "Angular routes", e.g.
 <add input="{REQUEST_URI}" pattern="^/(api)" negate="true"/>
 ```
  
+ Project support angular-cli generation,  testing and linting. E.g. go to ./src/app folder and run ng generate component test  
+ If you wish to use angular-cli install it globally first npm install -g @angular/cli
 
 
 # Useful extensions:
