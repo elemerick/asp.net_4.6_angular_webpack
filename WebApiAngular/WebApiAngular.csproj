@@ -108,7 +108,8 @@
     <Content Include="karma.conf.js" />
     <Content Include="postcss.config.js" />
     <Content Include="protractor.conf.js" />
-    <Content Include="src\app\shared\compose-message.component.html" />
+    <Content Include="src\app\shared\compose-message\compose-message.component.css" />
+    <Content Include="src\app\shared\compose-message\compose-message.component.html" />
     <Content Include="src\css\styles.css" />
     <Content Include="src\images\favicon.ico" />
     <Content Include="src\index.html" />
@@ -184,9 +185,11 @@
     <TypeScriptCompile Include="src\app\crisis-center\crisis-detail.component.ts" />
     <TypeScriptCompile Include="src\app\crisis-center\crisis-list.component.ts" />
     <TypeScriptCompile Include="src\app\crisis-center\crisis.service.ts" />
+    <TypeScriptCompile Include="src\app\crisis-center\crisis.ts" />
     <TypeScriptCompile Include="src\app\heroes\hero-detail.component.ts" />
     <TypeScriptCompile Include="src\app\heroes\hero-list.component.ts" />
     <TypeScriptCompile Include="src\app\heroes\hero.service.ts" />
+    <TypeScriptCompile Include="src\app\heroes\hero.ts" />
     <TypeScriptCompile Include="src\app\heroes\heroes-routing.module.ts" />
     <TypeScriptCompile Include="src\app\heroes\heroes.module.ts" />
     <TypeScriptCompile Include="src\app\login\login-routing.module.ts" />
@@ -195,7 +198,8 @@
     <TypeScriptCompile Include="src\app\rxjs-operators.ts" />
     <TypeScriptCompile Include="src\app\shared\animations.ts" />
     <TypeScriptCompile Include="src\app\shared\api.ts" />
-    <TypeScriptCompile Include="src\app\shared\compose-message.component.ts" />
+    <TypeScriptCompile Include="src\app\shared\compose-message\compose-message.component.ts" />
+    <TypeScriptCompile Include="src\app\shared\handle-error.ts" />
     <TypeScriptCompile Include="src\app\shared\not-found.component.ts" />
     <TypeScriptCompile Include="src\app\shared\shared.module.ts" />
     <TypeScriptCompile Include="src\main.ts" />
