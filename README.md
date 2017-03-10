@@ -31,7 +31,10 @@ You can build your Angular app by npm scripts commands:
 
 All routes redirected to Angular app except for /api uri. If you want add additional routes to WebApi add corresponding line in
 Web.config rule named "Angular routes", e.g. 
- <add input="{REQUEST_URI}" pattern="^/(api)" negate="true"/>
+```sh
+<add input="{REQUEST_URI}" pattern="^/(api)" negate="true"/>
+```
+ 
 
 
 # Useful extensions:
