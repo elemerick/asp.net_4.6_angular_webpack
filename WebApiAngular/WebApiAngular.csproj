@@ -105,6 +105,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
+    <Content Include="postcss.config.js" />
     <Content Include="src\app\shared\compose-message.component.html" />
     <Content Include="src\css\styles.css" />
     <Content Include="src\images\favicon.ico" />

@@ -50,14 +50,13 @@ module.exports = {
         // css - The pattern matches application-wide styles, not Angular ones
         test: /\.css$/,
         exclude: path.join(__dirname, `src`, `app`),
-        use: ExtractTextPlugin.extract({fallback: `style-loader`, use: [`css-loader?sourceMap`]}) // postcss-loader
+        use: ExtractTextPlugin.extract({fallback: `style-loader`, use: [`css-loader?{"sourceMap":false,"importLoaders":1}`, `postcss-loader`]})
       },
       {
         // the second handles component-scoped styles (the ones specified in a component`s styleUrls metadata property)
         test: /\.css$/,
         include: path.join(__dirname, `src`, `app`),
-        use: `raw-loader` // loads them as strings via the raw loader — which is what Angular expects to do with styles specified in a styleUrls metadata property.
-        // use: [`exports-loader?module.exports.toString()`, `css-loader?sourceMap-loader`,`postcss-loader`]
+        use: [`exports-loader?module.exports.toString()`, `css-loader?{"sourceMap":false,"importLoaders":1}`, `postcss-loader`]
       }
     ]
   },
@@ -125,5 +124,16 @@ module.exports = {
       enabled: true,
     }),
   ],
-  devtool: `source-map` // `hidden-source-map`
+  devtool: `source-map`, // `hidden-source-map`
+  node: {
+    fs: `empty`,
+    global: true,
+    crypto: `empty`,
+    tls: `empty`,
+    net: `empty`,
+    process: true,
+    module: false,
+    clearImmediate: false,
+    setImmediate: false
+  }
 };

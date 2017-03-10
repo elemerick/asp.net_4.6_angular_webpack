@@ -1,6 +1,6 @@
 import { NgModule }                    from '@angular/core';
 import { RouterModule, Routes }        from '@angular/router';
-import { ComposeMessageComponent }     from './shared/compose-message.component';
+import { ComposeMessageComponent }     from './shared/compose-message/compose-message.component';
 import { NotFoundComponent }           from './shared/not-found.component';
 import { AuthGuard }                   from './core/services/auth-guard.service';
 import { SelectivePreloadingStrategy } from './core/services/selective-preload-strategy';

@@ -2,7 +2,7 @@ import { NgModule }                       from '@angular/core';
 import { CommonModule }                   from '@angular/common';
 import { FormsModule }                    from '@angular/forms';
 import { NotFoundComponent }              from './not-found.component';
-import { ComposeMessageComponent }        from './compose-message.component';
+import { ComposeMessageComponent }        from './compose-message/compose-message.component';
 
 @NgModule({
   imports:      [ CommonModule, FormsModule ],
