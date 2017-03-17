@@ -28,6 +28,8 @@ First install all npm packages:
     npm install
 
 Build your Angular app by npm scripts commands:
+
+
 | npm script | comment |
 | ------ | ------ |
 | npm run build  | build Angular app without AOT |
