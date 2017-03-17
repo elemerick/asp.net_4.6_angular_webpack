@@ -62,3 +62,5 @@ bundles
 # Visual Studio 2015 cache/options directory
 .vs/
 
+# secret key.config
+keys.config

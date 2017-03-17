@@ -1,11 +1,16 @@
-﻿using System.Web.Http;
+﻿using System.Threading;
+using System.Web;
+using System.Web.Http;
+using WebApiAngular.Auth;
 using WebApiAngular.DAL;
 using WebApiAngular.Models;
 
 namespace WebApiAngular.Controllers
 {
+    [Authorize(Roles = "IncidentResolvers")]
+    [ClaimsAuthorization(ClaimType = "FTE", ClaimValue = "1")]
     [RoutePrefix("api/crises")]
-    public class CrisesController : ApiController
+    public class CrisesController : BaseApiController
     {
         private ICrisesRepository _crisesRepo;
 

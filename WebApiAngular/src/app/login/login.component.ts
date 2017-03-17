@@ -1,53 +1,60 @@
-import { Component }        from '@angular/core';
-import { Router,
-         NavigationExtras } from '@angular/router';
-import { AuthService }      from '../core/services/auth.service';
+import { Component, OnInit,
+         ElementRef, ViewChild }    from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthService }              from '../core/services/auth.service';
+import { FormBuilder, FormGroup,
+         Validators }               from '@angular/forms';
+import { ValidationService }        from '../core/services/validation.service';
 
 @Component({
-  template: `
-    <h2>LOGIN</h2>
-    <p>{{message}}</p>
-    <p>
-      <button (click)="login()"  *ngIf="!authService.isLoggedIn">Login</button>
-      <button (click)="logout()" *ngIf="authService.isLoggedIn">Logout</button>
-    </p>`
+  selector: 'my-login-form',
+  templateUrl: './login.component.html',
+  styleUrls: [ './login.component.css' ],
 })
-export class LoginComponent {
-  message: string;
+export class LoginComponent implements OnInit {
+  public message: string;
+  public user: FormGroup;
 
-  constructor(public authService: AuthService, public router: Router) {
+  @ViewChild('loginForm') public loginForm: ElementRef;
+
+  constructor(private authService: AuthService,
+              private router: Router,
+              private validationService: ValidationService,
+              private fb: FormBuilder) { }
+
+  public ngOnInit() {
+    this.user = this.fb.group({
+        userlogin: ['', [Validators.required]],
+        password: ['', [Validators.required]],
+    });
+
     this.setMessage();
   }
 
-  setMessage() {
-    this.message = 'Logged ' + (this.authService.isLoggedIn ? 'in' : 'out');
+  public login() {
+    this.message = 'Trying to log in ...';
+    this.authService.login(this.user.value.userlogin, this.user.value.password).subscribe((isLogged: boolean) => {
+      if (isLogged) {
+        // Get the redirect URL from our auth service If no redirect has been set, use the default
+        this.setMessage();
+        let redirect = this.authService.redirectUrl ? this.authService.redirectUrl : '/admin';
+        this.router.navigate([redirect]);
+      }
+    },
+    (error: string) => console.log(error)
+    );
+
   }
 
-  login() {
-    this.message = 'Trying to log in ...';
-
-    this.authService.login().subscribe(() => {
-      this.setMessage();
-      if (this.authService.isLoggedIn) {
-        // Get the redirect URL from our auth service
-        // If no redirect has been set, use the default
-        let redirect = this.authService.redirectUrl ? this.authService.redirectUrl : '/admin';
-
-        // Set our navigation extras object
-        // that passes on our global query params and fragment
-        let navigationExtras: NavigationExtras = {
-          preserveQueryParams: true,
-          preserveFragment: true
-        };
-
-        // Redirect the user
-        this.router.navigate([redirect], navigationExtras);
-      }
+  public logout() {
+    this.authService.logout().subscribe(() => {
+        this.setMessage();
+        this.router.navigate(['/']);
     });
   }
 
-  logout() {
-    this.authService.logout();
-    this.setMessage();
+  private setMessage() {
+    this.message = 'Logged ' + (this.authService.isLoggedIn() ? 'in' : 'out');
   }
+
 }

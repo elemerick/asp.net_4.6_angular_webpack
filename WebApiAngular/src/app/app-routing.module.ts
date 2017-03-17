@@ -25,6 +25,7 @@ const appRoutes: Routes = [
   {
     path: 'crisis-center',
     loadChildren: './crisis-center/crisis-center.module#CrisisCenterModule',
+    canLoad: [AuthGuard],
     data: {
       preload: true,
       title: 'crisis-center'

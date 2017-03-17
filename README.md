@@ -1,6 +1,10 @@
-# Quick start project for ASP.NET Web API 2 based on .NET Framework 4.6 with Angular and Webpack 2.
-Prerequisite: install node.js, typesctipt globally: npm install -g typescript@2.0
+# Quick start project for ASP.NET Web API 2 based on .NET Framework 4.6 with Angular and Webpack  2 and JWT authentication.
+Prerequisite: install node.js, install TypeScript globally:
+                          
+    npm install -g typescript@2.0
+
 Prerequisite: Visual Studio 2015 Update 3 or Visual Studio 2017
+
 Prerequisite: Configure Visual Studio to use the global external web tools instead of the tools that ship with Visual Studio:
   - Open the Options dialog with Tools | Options
   - In the tree on the left, select Projects and Solutions | External Web Tools.
@@ -8,46 +12,78 @@ Prerequisite: Configure Visual Studio to use the global external web tools inste
   - Click OK to close the dialog.
   - Restart Visual Studio for this change to take effect.
   
-If you want disable "npm install" every time you open the project then turn off all entries in External Web Tools.
+To disable compilation of ts files in IDE upon saving set for a given tsconfig.json "compileOnSave": false
 
-To disable compilation in IDE upon saving set  for a given tsconfig.json "compileOnSave": false
+If you want to disable "npm install" every time you open the project then turn off all entries in External Web Tools.
 
-If you would like to disable building TypeScript files in your solution add node
+If you would like to disable building TypeScript files by IDE Build in your solution add node
+```sh
 <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
-to the first
-<PropertyGroup>
-element in .csproj file.
+```
+to the first PropertyGroup element in .csproj file.
 
 # Building Angular:
-You can build your Angular app by npm scripts commands:
-  - npm run build (build Angular app without AOT and minimization with sourcemaps)
-  - npm run build:prod  (build Angular app for production with AOT and minimization)
-  - npm run wp (build Angular app in watch mode without AOT)
-  - npm run clean (clean folder with output of webpack)
-  - npm run tslint (linting Angular app)
-  - npm run test (testing Angular app by karma and jasmine)
-  - npm run e2e ( e2e testing Angular app by protractor)
-  - npm run srcmap (you can investigate resulting webpack chuncks, don't forget to change for correct filename)
+First install all npm packages:
 
-All routes redirected to Angular app except for /api uri. If you want add additional routes to WebApi add corresponding line in
-Web.config rule named "Angular routes", e.g. 
+    npm install
+
+Build your Angular app by npm scripts commands:
+| npm script | comment |
+| ------ | ------ |
+| npm run build  | build Angular app without AOT |
+| npm run build:prod | build Angular app for production with AOT and minimization |
+| npm run wp  | build Angular app in watch mode without AOT |
+| npm run wp:aot | build Angular app with AOT but not in production mode |
+| npm run clean | clean output webpack folder |
+| npm run reset  | clean everything including node_modules |
+| npm run tslint  | inting Angular app |
+| npm run test  | testing Angular app by karma and jasmine |
+| npm run e2e  | e2e testing Angular app by protractor |
+| npm run srcmap  | investigate resulting webpack chunck, change for correct filename |
+
+
+All routes redirected to Angular app except for /api and /oauth uri. If you want to add routes to WebApi, then add corresponding line in Web.config rule named "Angular routes", e.g. 
 ```sh
 <add input="{REQUEST_URI}" pattern="^/(api)" negate="true"/>
 ```
  
- Project support angular-cli generation,  testing and linting. E.g. go to ./src/app folder and run ng generate component test  
- If you wish to use angular-cli install it globally first npm install -g @angular/cli
+ Project support angular-cli generation, testing and linting. 
 
+ Go to ./src/app folder and run for example  
+
+    ng generate component test  
+
+
+ It require to install angular-cli globally:
+ 
+    npm install -g @angular/cli
+
+
+# Authentication
+
+This application use JWT authentication.  Call /oauth/token endpoint for authentication. 
+
+Add to the project root folder keys.config file with secret key for signing tokens. **Don't include it to the source control**. Example:
+```sh
+<appSettings>
+  <add key="issuer" value="http://localhost:62422/"/>
+  <add key="secret" value="IxrAjDoa2FqElO7IhrSrUJELhUckePEPVpaePlS_Xaw"/>
+  <add key="as:AudienceId" value="414e1927a3884f68abc79f7283837fd1" />
+</appSettings>
+```
+
+This application use basic realization of Identity framework without EntityFrameowork or any other real DB. You can change working logic with DB in CustomUserManager and CustomUserStore classes. 
+
+Use BCrypt for password hashing in BCryptPasswordHasher class.
 
 # Useful extensions:
 
-For integration webpack builds with Studio building process use  NPM Task Runner https://marketplace.visualstudio.com/items?itemName=MadsKristensen.NPMTaskRunner
+For integration webpack builds with Studio building process use [NPM Task Runner](https://marketplace.visualstudio.com/items?itemName=MadsKristensen.NPMTaskRunner)
 
-or you can use WebPack Task Runner https://marketplace.visualstudio.com/items?itemName=MadsKristensen.WebPackTaskRunner
+Or [WebPack Task Runner](https://marketplace.visualstudio.com/items?itemName=MadsKristensen.WebPackTaskRunner)
 
-Also you can use this custom button, which will toggle Webpack's watch mode on and off in Visual Studio 2015 https://github.com/webpack/docs/wiki/Usage-with-Visual-Studio
+There is example of custom button, which will toggle Webpack's watch mode on and off in Visual Studio 2015 [link](https://github.com/webpack/docs/wiki/Usage-with-Visual-Studio)
 
-You can use https://marketplace.visualstudio.com/items?itemName=MadsKristensen.WebAnalyzer for tslint.
+You can use [WebAnalyzer](https://marketplace.visualstudio.com/items?itemName=MadsKristensen.WebAnalyzer) for tslint.
 
-Allow you to copy C# source code, then paste as Typescript syntax which help you with converting DTO or interface.  
-https://marketplace.visualstudio.com/items?itemName=NhaBuiDuc.TypescriptSyntaxPaste
+This extension allow you to copy C# source code, then paste as Typescript syntax which help you with converting DTO or interface [TypescriptSyntaxPaste](https://marketplace.visualstudio.com/items?itemName=NhaBuiDuc.TypescriptSyntaxPaste)

@@ -4,19 +4,20 @@ import { Observable }     from 'rxjs/Observable';
 import { Crisis }         from './crisis';
 import { API_CRISES }     from '../shared/api';
 import { handleError }    from '../shared/handle-error';
+import { AuthHttp }       from 'angular2-jwt';
 
 @Injectable()
 export class CrisisService {
   static nextCrisisId = 100;
-  constructor (private http: Http) {}
+  constructor (private authHttp: AuthHttp) {}
   public getCrises(): Observable<Crisis[]> {
-    return this.http.get(API_CRISES)
+    return this.authHttp.get(API_CRISES)
                     .map((res: Response) => res.json())
                     .catch(handleError);
   }
 
   public getCrisis(id: number | string): Observable<Crisis> {
-    return this.http.get(API_CRISES + '/' + id)
+    return this.authHttp.get(API_CRISES + '/' + id)
                 .map((res: Response) => res.json())
                 .catch(handleError);
   }
