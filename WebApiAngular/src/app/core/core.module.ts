@@ -1,4 +1,4 @@
-import { NgModule, Optional, SkipSelf } from '@angular/core';
+﻿import { NgModule, Optional, SkipSelf } from '@angular/core';
 import { CommonModule }                 from '@angular/common';
 import { ValidationService }            from './services/validation.service';
 import { AuthService }                  from './services/auth.service';
@@ -7,17 +7,17 @@ import { CanDeactivateGuard }           from './services/can-deactivate-guard.se
 import { AuthGuard }                    from './services/auth-guard.service';
 import { DialogService }                from './services/dialog.service';
 import { AuthHttp, AuthConfig }         from 'angular2-jwt';
-import { Http, RequestOptions }         from '@angular/http';
+import { HttpModule, Http, RequestOptions } from '@angular/http';
 
 
-function authHttpServiceFactory(http: Http, options: RequestOptions) {
+export function authHttpServiceFactory(http: Http, options: RequestOptions) {
   return new AuthHttp(new AuthConfig({
     globalHeaders: [{'Content-Type': 'application/json'}]
   }), http, options);
 }
 
 @NgModule({
-  imports:      [ CommonModule ],
+  imports:      [ CommonModule, HttpModule ],
   providers:    [ AuthService,
                   AuthGuard,
                   DialogService,
