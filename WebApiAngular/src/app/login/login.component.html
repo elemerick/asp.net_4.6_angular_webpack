@@ -1,7 +1,7 @@
 <h2>LOGIN</h2>
 <p>{{message}}</p>
 
-<form novalidate [formGroup]="user" (ngSubmit)="login()" *ngIf="!(authService.isLoggedIn())" #loginForm>
+<form novalidate [formGroup]="user" (ngSubmit)="login()" *ngIf="!(isLoggedIn())" #loginForm>
   <label>
     <span>Логин</span>
     <input type="text" name="userlogin" placeholder="Логин" formControlName="userlogin" autocomplete ="username" required autofocus>
@@ -15,4 +15,4 @@
   <my-control-error-messages [control] = "user.get('password')"> </my-control-error-messages>
   <button type="submit" [disabled]="user.invalid">Войти</button>
 </form>
-<button (click)="logout()" *ngIf="(authService.isLoggedIn())">Выйти</button>
+<button (click)="logout()" *ngIf="isLoggedIn()">Выйти</button>

@@ -53,6 +53,10 @@ export class LoginComponent implements OnInit {
     });
   }
 
+  public isLoggedIn() {
+    return this.authService.isLoggedIn();
+  }
+
   private setMessage() {
     this.message = 'Logged ' + (this.authService.isLoggedIn() ? 'in' : 'out');
   }
