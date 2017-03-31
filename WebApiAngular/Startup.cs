@@ -1,4 +1,5 @@
 ﻿using System.Web.Http;
+using Microsoft.AspNet.SignalR;
 using Microsoft.Owin;
 using Owin;
 
@@ -19,6 +20,13 @@ namespace WebApiAngular
             ConfigureWebApi(httpConfig);
 
             httpConfig.IncludeErrorDetailPolicy = IncludeErrorDetailPolicy.LocalOnly;
+
+            var hubConfiguration = new HubConfiguration();
+            hubConfiguration.EnableJavaScriptProxies = false;
+#if DEBUG
+            hubConfiguration.EnableDetailedErrors = true;
+#endif
+            app.MapSignalR(hubConfiguration);
 
             app.UseWebApi(httpConfig);
         }

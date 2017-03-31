@@ -10,8 +10,6 @@ import { HeroesModule }            from './heroes/heroes.module';
 import { LoginModule }             from './login/login.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import './rxjs-operators';
-
 @NgModule({
   bootstrap: [ AppComponent ],
   imports: [

@@ -8,7 +8,9 @@ import { AuthGuard }                    from './services/auth-guard.service';
 import { DialogService }                from './services/dialog.service';
 import { AuthHttp, AuthConfig }         from 'angular2-jwt';
 import { HttpModule, Http, RequestOptions } from '@angular/http';
-
+import { SignalRModule }                from 'ng2-signalr';
+import { SignalRConfiguration }         from 'ng2-signalr';
+import { SignalRService }               from './services/signalr.service';
 
 export function authHttpServiceFactory(http: Http, options: RequestOptions) {
   return new AuthHttp(new AuthConfig({
@@ -16,9 +18,16 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
   }), http, options);
 }
 
+export function createConfig(): SignalRConfiguration {
+  const config = new SignalRConfiguration();
+  config.logging = true;
+  return config;
+}
+
 @NgModule({
-  imports:      [ CommonModule, HttpModule ],
+  imports:      [ CommonModule, HttpModule, SignalRModule.forRoot(createConfig) ],
   providers:    [ AuthService,
+                  SignalRService,
                   AuthGuard,
                   DialogService,
                   SelectivePreloadingStrategy,

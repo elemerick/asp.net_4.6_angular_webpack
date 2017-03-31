@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Configuration;
+using System.Threading.Tasks;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.DataHandler.Encoder;
@@ -39,7 +40,8 @@ namespace WebApiAngular
                 IssuerSecurityTokenProviders = new IIssuerSecurityTokenProvider[]
                 {
                     new SymmetricKeyIssuerSecurityTokenProvider(issuer, secret)
-                }
+                },
+                Provider = new CustomJWTAuthenticationProvider()
             });
         }
 
@@ -57,7 +59,5 @@ namespace WebApiAngular
                 AccessTokenFormat = new CustomJwtFormat(issuer) // the implementation on how to generate the access token using JWT formats
             });
         }
-
-
     }
 }
