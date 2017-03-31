@@ -1,6 +1,8 @@
-﻿import { Component, OnInit }                     from '@angular/core';
-import { Title }                                 from '@angular/platform-browser';
-import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
+﻿import { Component, OnInit }                      from '@angular/core';
+import { Title }                                  from '@angular/platform-browser';
+import { Router, NavigationEnd, ActivatedRoute }  from '@angular/router';
+import { SignalRService }                         from './core/services/signalr.service';
+import { AuthService }                            from './core/services/auth.service';
 
 @Component({
   selector: 'my-app',
@@ -18,10 +20,13 @@ import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
   `
 })
 export class AppComponent implements OnInit {
+
     public constructor(
-        private router: Router,
-        private titleService: Title,
-        private activatedRoute: ActivatedRoute
+      private router: Router,
+      private titleService: Title,
+      private activatedRoute: ActivatedRoute,
+      private signalrService: SignalRService,
+      private authService: AuthService,
     ) { }
 
     public ngOnInit(): void {
@@ -36,9 +41,17 @@ export class AppComponent implements OnInit {
         .filter((route) => route.outlet === 'primary')
         .mergeMap((route) => route.data)
         .subscribe((event) => this.setTitle(event['title']) );
+
+      this.authService.isLoggedInObs().subscribe((isLoggedIn: boolean) => {
+        if (isLoggedIn) {
+          this.signalrService.connectToMessageHub();
+        } else {
+          this.signalrService.stopConnection();
+        }
+      });
     }
 
     public setTitle( newTitle: string) {
-        this.titleService.setTitle( newTitle );
+      this.titleService.setTitle( newTitle );
     }
 }

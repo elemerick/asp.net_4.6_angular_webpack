@@ -5,7 +5,7 @@ using WebApiAngular.Models;
 namespace WebApiAngular.Controllers
 {
     [RoutePrefix("api/heroes")]
-    public class HeroesController : ApiController
+    public class HeroesController : BaseApiController
     {
         private IHeroesRepository _heroesRepo;
 

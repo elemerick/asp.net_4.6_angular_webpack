@@ -9,17 +9,11 @@
         "baseUrl": "",
         "declaration": false,
         "noImplicitAny": true,
-        "removeComments": false,
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
         "suppressImplicitAnyIndexErrors":true,
         "sourceMap": true,
         "pretty": true,
-        "allowUnreachableCode": false,
-        "allowUnusedLabels": false,
-        "noImplicitReturns": true,
-        "noImplicitUseStrict": false,
-        "noFallthroughCasesInSwitch": true,
         "skipLibCheck": true,
         "rootDir": "./src",
         "lib": [
@@ -33,7 +27,6 @@
       "useWebpackText": true
     },
     "angularCompilerOptions": {
-      "entryModule": "./src/app/app.module#AppModule",
       "genDir": "./aot",
       "skipMetadataEmit" : true
     },

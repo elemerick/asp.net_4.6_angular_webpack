@@ -1,3 +1,6 @@
+import 'expose-loader?jQuery!../node_modules/jquery/dist/jquery.min.js';
+import '../node_modules/signalr/jquery.signalR.min.js';
+
 // Statics
 import 'rxjs/add/observable/throw';
 import 'rxjs/add/observable/of';

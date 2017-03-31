@@ -1,4 +1,4 @@
-# Quick start project for ASP.NET Web API 2 based on .NET Framework 4.6 with Angular and Webpack  2 and JWT authentication.
+# Quick start project for ASP.NET Web API 2 based on .NET Framework 4.6 with Angular including Webpack 2, JWT authentication, SignalR with authentication.
 Prerequisite: install node.js, install TypeScript globally:
                           
     npm install -g typescript@2.0
@@ -63,9 +63,7 @@ All routes redirected to Angular app except for /api and /oauth uri. If you want
 
 # Authentication
 
-Checkout feature/auth branch for realization of JWT authentication. 
-
-Call /oauth/token endpoint for authentication. 
+This application use JWT authentication.  Call /oauth/token endpoint for authentication. 
 
 Add to the project root folder keys.config file with secret key for signing tokens. **Don't include it to the source control**. Example:
 ```sh

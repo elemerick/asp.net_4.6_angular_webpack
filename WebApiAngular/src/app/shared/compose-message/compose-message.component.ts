@@ -12,8 +12,9 @@ export class ComposeMessageComponent {
   @HostBinding('style.display')   display = 'block';
   @HostBinding('style.position')  position = 'absolute';
 
-  details: string;
-  sending = false;
+  public details: string;
+  public sending = false;
+  public message: string;
 
   constructor(private router: Router) {}
 

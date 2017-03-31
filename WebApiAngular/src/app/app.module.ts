@@ -8,8 +8,7 @@ import { CoreModule }              from './core/core.module';
 import { SharedModule }            from './shared/shared.module';
 import { HeroesModule }            from './heroes/heroes.module';
 import { LoginModule }             from './login/login.module';
-
-import './rxjs-operators';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   bootstrap: [ AppComponent ],
@@ -21,6 +20,7 @@ import './rxjs-operators';
     HeroesModule,
     LoginModule,
     AppRoutingModule,
+    BrowserAnimationsModule
   ],
   declarations: [
     AppComponent
