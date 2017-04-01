@@ -17,4 +17,4 @@ import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/share';
 import 'rxjs/add/observable/forkJoin';
 import 'rxjs/add/observable/empty';
-
+import 'rxjs/add/observable/fromPromise';
