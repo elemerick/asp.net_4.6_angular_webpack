@@ -44,7 +44,7 @@ Build your Angular app by npm scripts commands:
 | npm run srcmap  | investigate resulting webpack chunck, change for correct filename |
 
 
-All routes redirected to Angular app except for /api and /oauth uri. If you want to add routes to WebApi, then add corresponding line in Web.config rule named "Angular routes", e.g. 
+All routes redirected to Angular app except for /api , /oauth , /signalr uri. If you want to add routes to WebApi, then add corresponding line in Web.config rule named "Angular routes", e.g. 
 ```sh
 <add input="{REQUEST_URI}" pattern="^/(api)" negate="true"/>
 ```
