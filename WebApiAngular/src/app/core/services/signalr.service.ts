@@ -1,20 +1,21 @@
-import { Injectable }                                       from '@angular/core';
-import { AuthService }                                      from './auth.service';
-import { Observable }                                       from 'rxjs/Observable';
-import { Subject }                                          from 'rxjs/Subject';
-import { SignalR, IConnectionOptions, ISignalRConnection }  from 'ng2-signalr';
+import { Injectable }                                     from '@angular/core';
+import { AuthService }                                    from './auth.service';
+import { Observable }                                     from 'rxjs/Observable';
+import { Subject }                                        from 'rxjs/Subject';
+import { SignalR, IConnectionOptions, ConnectionStatus,
+         ISignalRConnection, ConnectionStatuses }         from 'ng2-signalr';
 
 @Injectable()
 export class SignalRService {
   private signalrConnection: ISignalRConnection;
-  private connectionStatus = 'disconnected';
+  private connectionStatus = ConnectionStatuses.disconnected;
   private trigger = new Subject<boolean>();
   private stopFromCode = false;
 
   constructor(private authService: AuthService, private _signalR: SignalR) {
     const signalrObs = this.trigger
       .filter(x => x === true)
-      .filter(() => this.connectionStatus === 'disconnected')
+      .filter(() => this.connectionStatus === ConnectionStatuses.disconnected )
       .map((): IConnectionOptions => this.getConnectionOptions())
       .switchMap((options: IConnectionOptions) =>
         Observable.fromPromise(this._signalR.connect(options))
@@ -24,11 +25,11 @@ export class SignalRService {
       .share();
 
     signalrObs.mergeMap((x: ISignalRConnection) => x.status)
-      .map((x) => this.connectionStatus = x.name)
-      .filter((statusName) => statusName === 'disconnected')
+      .map((x) => this.connectionStatus = x)
+      .filter((status) => status === ConnectionStatuses.disconnected)
       .filter(() => !this.stopFromCode)
       .delay(5000)
-      .subscribe((statusName: string) => {
+      .subscribe((status: ConnectionStatus) => {
         this.connectToMessageHub();
     });
 
@@ -67,14 +68,14 @@ export class SignalRService {
   }
 
   public stopConnection() {
-    if (this.signalrConnection && this.signalrConnection.id && this.connectionStatus !== 'disconnected') {
+    if (this.signalrConnection && this.signalrConnection.id && this.connectionStatus !== ConnectionStatuses.disconnected) {
       this.stopFromCode = true;
       this.signalrConnection.stop();
     }
   }
 
   public startConnection() {
-    if (this.signalrConnection && this.signalrConnection.id && this.connectionStatus === 'disconnected') {
+    if (this.signalrConnection && this.signalrConnection.id && this.connectionStatus === ConnectionStatuses.disconnected) {
       this.stopFromCode = false;
       this.signalrConnection.start();
     }
