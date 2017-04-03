@@ -3,9 +3,12 @@ import '../node_modules/signalr/jquery.signalR.min.js';
 
 import 'rxjs/add/observable/throw';
 import 'rxjs/add/observable/of';
+import 'rxjs/add/observable/defer';
 import 'rxjs/add/operator/delay';
 import 'rxjs/add/operator/do';
+import 'rxjs/add/operator/scan';
 import 'rxjs/add/operator/retry';
+import 'rxjs/add/operator/retryWhen';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';

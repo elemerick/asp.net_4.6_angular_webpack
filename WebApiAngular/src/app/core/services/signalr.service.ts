@@ -15,30 +15,34 @@ export class SignalRService {
   constructor(private authService: AuthService, private _signalR: SignalR) {
     const signalrObs = this.trigger
       .filter(x => x === true)
-      .filter(() => this.connectionStatus === ConnectionStatuses.disconnected )
       .map((): IConnectionOptions => this.getConnectionOptions())
       .switchMap((options: IConnectionOptions) =>
-        Observable.fromPromise(this._signalR.connect(options))
-          .retry(3)
-          .catch(err => Observable.empty())
+        Observable.defer(() => Observable.fromPromise(this._signalR.connect(options)))
+        .retryWhen(err => err.scan<number>((errorCount, error) => {
+          if (errorCount >= 2) {
+            throw error;
+          }
+          return errorCount + 1;
+        }, 0).delay(3000))
+        .catch(err => Observable.empty())
       )
       .share();
 
-    signalrObs.mergeMap((x: ISignalRConnection) => x.status)
+    signalrObs.switchMap((x: ISignalRConnection) => x.status)
       .map((x) => this.connectionStatus = x)
-      .filter((status) => status === ConnectionStatuses.disconnected)
+      .filter((status) => status.equals(ConnectionStatuses.disconnected))
       .filter(() => !this.stopFromCode)
       .delay(5000)
       .subscribe((status: ConnectionStatus) => {
         this.connectToMessageHub();
     });
 
-    signalrObs.mergeMap((x: ISignalRConnection) => x.errors)
+    signalrObs.switchMap((x: ISignalRConnection) => x.errors)
       .subscribe((error: any) => {
         console.error('SignalR ERROR: ', error);
       });
 
-    signalrObs.mergeMap((x: ISignalRConnection) => x.listenFor('echoMethodResponse'))
+    signalrObs.switchMap((x: ISignalRConnection) => x.listenFor('echoMethodResponse'))
       .subscribe((data: any) => {
           console.log(data);
         }, (errmsg: any) => {
@@ -68,14 +72,14 @@ export class SignalRService {
   }
 
   public stopConnection() {
-    if (this.signalrConnection && this.signalrConnection.id && this.connectionStatus !== ConnectionStatuses.disconnected) {
+    if (this.signalrConnection && this.signalrConnection.id && !this.connectionStatus.equals(ConnectionStatuses.disconnected)) {
       this.stopFromCode = true;
       this.signalrConnection.stop();
     }
   }
 
   public startConnection() {
-    if (this.signalrConnection && this.signalrConnection.id && this.connectionStatus === ConnectionStatuses.disconnected) {
+    if (this.signalrConnection && this.signalrConnection.id && this.connectionStatus.equals(ConnectionStatuses.disconnected)) {
       this.stopFromCode = false;
       this.signalrConnection.start();
     }
