@@ -8,34 +8,20 @@ import { SignalR, IConnectionOptions, ISignalRConnection }  from 'ng2-signalr';
 export class SignalRService {
   private signalrConnection: ISignalRConnection;
   private connectionStatus = 'disconnected';
-  private mainObs = new Subject<boolean>();
+  private trigger = new Subject<boolean>();
   private stopFromCode = false;
 
   constructor(private authService: AuthService, private _signalR: SignalR) {
-    const signalrObs = this.mainObs
+    const signalrObs = this.trigger
       .filter(x => x === true)
       .filter(() => this.connectionStatus === 'disconnected')
-      .map((): IConnectionOptions => this.getConnectionOptions)
+      .map((): IConnectionOptions => this.getConnectionOptions())
       .switchMap((options: IConnectionOptions) =>
         Observable.fromPromise(this._signalR.connect(options))
           .retry(3)
           .catch(err => Observable.empty())
       )
       .share();
-
-    signalrObs.subscribe((x: ISignalRConnection) => {
-      this.signalrConnection = x;
-      this.sendMessageToServer('test message');
-    }, (errmsg) => {
-      console.error(errmsg);
-    });
-
-    signalrObs.mergeMap((x: ISignalRConnection) => x.listenFor('echoMethodResponse'))
-      .subscribe((data: any) => {
-          console.log(data);
-        }, (errmsg: any) => {
-          console.error(errmsg);
-        });
 
     signalrObs.mergeMap((x: ISignalRConnection) => x.status)
       .map((x) => this.connectionStatus = x.name)
@@ -50,10 +36,24 @@ export class SignalRService {
       .subscribe((error: any) => {
         console.error('SignalR ERROR: ', error);
       });
+
+    signalrObs.mergeMap((x: ISignalRConnection) => x.listenFor('echoMethodResponse'))
+      .subscribe((data: any) => {
+          console.log(data);
+        }, (errmsg: any) => {
+          console.error(errmsg);
+        });
+
+    signalrObs.subscribe((x: ISignalRConnection) => {
+      this.signalrConnection = x;
+      this.sendMessageToServer('test message');
+    }, (errmsg) => {
+      console.error(errmsg);
+    });
   }
 
   public connectToMessageHub() {
-    this.mainObs.next(true);
+    this.trigger.next(true);
   }
 
   public sendMessageToServer(msg: string) {
@@ -68,15 +68,15 @@ export class SignalRService {
 
   public stopConnection() {
     if (this.signalrConnection && this.signalrConnection.id && this.connectionStatus !== 'disconnected') {
-      this.signalrConnection.stop();
       this.stopFromCode = true;
+      this.signalrConnection.stop();
     }
   }
 
   public startConnection() {
     if (this.signalrConnection && this.signalrConnection.id && this.connectionStatus === 'disconnected') {
-      this.signalrConnection.start();
       this.stopFromCode = false;
+      this.signalrConnection.start();
     }
   }
 

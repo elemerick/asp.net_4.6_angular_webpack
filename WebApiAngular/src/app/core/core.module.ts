@@ -20,7 +20,9 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
 
 export function createConfig(): SignalRConfiguration {
   const config = new SignalRConfiguration();
-  config.logging = true;
+  if (process.env.NODE_ENV !== 'production') {
+    config.logging = true;
+  }
   return config;
 }
 
