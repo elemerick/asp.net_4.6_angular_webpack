@@ -1,7 +1,7 @@
-# Quick start project for ASP.NET Web API 2 based on .NET Framework 4.6 with Angular including Webpack 2, JWT authentication, SignalR with authentication.
+# Quick start project for ASP.NET Web API 2 based on .NET Framework 4.6 with Angular including Webpack, JWT authentication, SignalR with authentication.
 Prerequisite: install node.js, install TypeScript globally:
                           
-    npm install -g typescript@2.0
+    npm install -g typescript
 
 Prerequisite: Visual Studio 2015 Update 3 or Visual Studio 2017
 
