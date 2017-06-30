@@ -20,7 +20,8 @@
           "es2016",
           "dom"
         ],
-        "typeRoots": ["node_modules/@types"]
+        "typeRoots": ["node_modules/@types"],
+        "noStrictGenericChecks": true
     },
     "awesomeTypescriptLoaderOptions": {
       "forkChecker": true,

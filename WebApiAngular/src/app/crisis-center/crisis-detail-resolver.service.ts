@@ -12,9 +12,6 @@ export class CrisisDetailResolver implements Resolve<Crisis> {
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Crisis> {
     let id = route.params['id'];
 
-    return this.cs.getCrisis(id).catch( (err) => {
-      this.router.navigate(['/crisis-center']);
-      return null;
-    });
+    return this.cs.getCrisis(id);
   }
 }

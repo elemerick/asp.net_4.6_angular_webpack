@@ -1,11 +1,31 @@
 /* Master Styles */
+@import "normalize.css/normalize.css";
+@import "./constants.css";
+
+html {
+  box-sizing: border-box;
+
+  background-color: var(--mainColor);
+}
+
+/**, *:before, *:after {
+  box-sizing: inherit;
+}*/
+
+body, html {
+  margin: 0;
+  padding: 0;
+}
+
 h1 {
   color: #369;
+
   font-family: Arial, Helvetica, sans-serif;
   font-size: 250%;
 }
 h2, h3 {
   color: #444;
+
   font-family: Arial, Helvetica, sans-serif;
   font-weight: lighter;
 }
@@ -14,6 +34,7 @@ body {
 }
 body, input[text], button {
   color: #888;
+
   font-family: Cambria, Georgia;
 }
 a {
@@ -21,32 +42,39 @@ a {
   cursor: hand;
 }
 button {
-  font-family: Arial;
-  background-color: #eee;
-  border: none;
   padding: 5px 10px;
-  border-radius: 4px;
+
   cursor: pointer;
   cursor: hand;
+
+  border: none;
+  border-radius: 4px;
+  background-color: #eee;
+
+  font-family: Arial;
 }
 button:hover {
   background-color: #cfd8dc;
 }
 button:disabled {
-  background-color: #eee;
-  color: #aaa;
   cursor: auto;
+
+  color: #aaa;
+  background-color: #eee;
 }
 
 /* Navigation link styles */
 nav a {
-  padding: 5px 10px;
-  text-decoration: none;
-  margin-right: 10px;
-  margin-top: 10px;
   display: inline-block;
-  background-color: #eee;
+
+  margin-top: 10px;
+  margin-right: 10px;
+  padding: 5px 10px;
+
+  text-decoration: none;
+
   border-radius: 4px;
+  background-color: #eee;
 }
 nav a:visited, a:link {
   color: #607D8B;
@@ -61,29 +89,34 @@ nav a.active {
 
 /* items class */
 .items {
-  margin: 0 0 2em 0;
-  list-style-type: none;
-  padding: 0;
   width: 24em;
+  margin: 0 0 2em 0;
+  padding: 0;
+
+  list-style-type: none;
 }
 .items li {
-  cursor: pointer;
   position: relative;
   left: 0;
-  background-color: #EEE;
+
+  height: 1.6em;
   margin: .5em;
   padding: .3em 0;
-  height: 1.6em;
+
+  cursor: pointer;
+
   border-radius: 4px;
+  background-color: #EEE;
 }
 .items li:hover {
+  left: .1em;
+
   color: #607D8B;
   background-color: #DDD;
-  left: .1em;
 }
 .items li.selected {
-  background-color: #CFD8DC;
   color: white;
+  background-color: #CFD8DC;
 }
 .items li.selected:hover {
   background-color: #BBD8DC;
@@ -93,18 +126,22 @@ nav a.active {
   top: -3px;
 }
 .items .badge {
-  display: inline-block;
-  font-size: small;
-  color: white;
-  padding: 0.8em 0.7em 0 0.7em;
-  background-color: #607D8B;
-  line-height: 1em;
   position: relative;
-  left: -1px;
   top: -4px;
+  left: -1px;
+
+  display: inline-block;
+
   height: 1.8em;
   margin-right: .8em;
+  padding: 0.8em 0.7em 0 0.7em;
+
+  color: white;
   border-radius: 4px 0 0 4px;
+  background-color: #607D8B;
+
+  font-size: small;
+  line-height: 1em;
 }
 /* everywhere else */
 * {

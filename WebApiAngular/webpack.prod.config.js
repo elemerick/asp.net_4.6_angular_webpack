@@ -8,19 +8,20 @@ const {AotPlugin} = require(`@ngtools/webpack`);
 const SriPlugin = require(`webpack-subresource-integrity`);
 
 const NODE_ENV = `production`;
-const entryPoints = [`manifest`, `polyfills`, `sw-register`, `styles`, `vendor`, `app`];
+const entryPoints = [`manifest`, `polyfills`, `sw-register`, `materialtheme`, `styles`, `vendor`, `app`];
 
 module.exports = {
   entry: {
     app: `./main.ts`,
     polyfills: `./polyfills.ts`,
     vendor: `./vendor.ts`,
-    styles: `./css/styles.css`
+    styles: `./css/styles.css`,
+    materialtheme: `./css/ain-material-theme.scss`
   },
   context: path.join(__dirname, `src`), // make ./src folder as root for building process
   resolve: {
     modules: [`./node_modules`],
-    extensions: [`.ts`, `.js`, `.css`, `.html`]
+    extensions: [`.ts`, `.js`, `.css`, `scss`, `.html`]
   },
   resolveLoader: {
     modules: [`./node_modules`]
@@ -60,10 +61,30 @@ module.exports = {
         use: ExtractTextPlugin.extract({fallback: `style-loader`, use: [`css-loader?{"sourceMap":false,"importLoaders":1}`, `postcss-loader`]})
       },
       {
+        // css - The pattern matches application-wide styles, not Angular ones
+        test: /\.scss$|\.sass$/,
+        include: path.join(__dirname, `src`, `css`),
+        use: ExtractTextPlugin.extract({
+          fallback: `style-loader`,
+          use: [`css-loader?{"sourceMap":false,"importLoaders":2}`, `postcss-loader`, `sass-loader?{"sourceMap": false,"precision": 8,"includePaths": []}`]
+        })
+      },
+      {
         // the second handles component-scoped styles (the ones specified in a component`s styleUrls metadata property)
         test: /\.css$/,
         include: [path.join(__dirname, `src`, `app`), path.join(__dirname, `node_modules`)],
         use: [`exports-loader?module.exports.toString()`, `css-loader?{"sourceMap":false,"importLoaders":1}`, `postcss-loader`]
+      },
+      {
+        // the second handles component-scoped styles (the ones specified in a component`s styleUrls metadata property)
+        test: /\.scss$|\.sass$/,
+        include: [path.join(__dirname, `src`, `app`), path.join(__dirname, `node_modules`)],
+        use: [
+          `exports-loader?module.exports.toString()`,
+          `css-loader?{"sourceMap":false,"importLoaders":2}`,
+          `postcss-loader`,
+          `sass-loader?{"sourceMap": false,"precision": 8,"includePaths": []}`
+        ]
       }
     ]
   },
@@ -92,6 +113,7 @@ module.exports = {
         }
       }
     }),
+    new webpack.optimize.ModuleConcatenationPlugin(),
     // extract the webpack runtime, which contains references to all bundles and chunks anywhere in the build, into a separate bundle
     new webpack.optimize.CommonsChunkPlugin({name: `manifest`, minChunks: Infinity}),
     new webpack.optimize.CommonsChunkPlugin({
@@ -109,7 +131,7 @@ module.exports = {
       minChunks: 2,
     }),
     new ExtractTextPlugin(
-      {filename: `css/[name].[hash].css`, allChunks: true} // extracts embedded css as external files, adding cache-busting hash to the filename.
+        {filename: `css/[name].[hash].css`, allChunks: true} // extracts embedded css as external files, adding cache-busting hash to the filename.
     ),
     new CopyWebpackPlugin([ // Copy files and directories in webpack.
       {from: `./images`, to: `images`}
@@ -125,9 +147,12 @@ module.exports = {
       debug: false
     }),
     new webpack.optimize.UglifyJsPlugin({
+      mangle: {
+        "screw_ie8": true
+      },
       compress: {
-        screw_ie8: true,
-        warnings: false
+        "screw_ie8": true,
+        "warnings": false
       },
       output: {
         comments: false
