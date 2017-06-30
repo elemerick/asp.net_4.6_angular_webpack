@@ -5,6 +5,7 @@ import { Http, Response, Headers }  from '@angular/http';
 import { LOGIN_USER_ENDPOINT }      from '../../shared/api';
 import { tokenNotExpired, JwtHelper } from 'angular2-jwt';
 import { handleError }              from '../../shared/handle-error';
+import { Router }                   from '@angular/router';
 
 @Injectable()
 export class AuthService {
@@ -12,17 +13,26 @@ export class AuthService {
   private isLoggedInSubject = new BehaviorSubject<boolean>(this.isLoggedIn());
   public redirectUrl: string; // store the URL so we can redirect after logging in
 
-  constructor(private http: Http) { }
+  constructor(private http: Http, private router: Router) {
+
+    Observable.interval(5000).map(() => tokenNotExpired()).filter(x => x === false).subscribe(x => this.isLoggedInSubject.next(x));
+
+    this.isLoggedInSubject.subscribe((isLoggedIn: boolean) => {
+      if (!isLoggedIn && this.getToken()) {
+        localStorage.removeItem('token');
+        this.router.navigate(['/login']);
+      }
+    });
+  }
 
   public login(username: string, password: string): Observable<any> {
     return this.authRequest(username, password, LOGIN_USER_ENDPOINT);
   }
 
-  public logout(): Observable<any> {
+  public logout() {
     this.isLoggedInSubject.next(false);
-    localStorage.removeItem('id_token');
-    return Observable.of(true);
   }
+
   public isLoggedIn() {
     return tokenNotExpired();
   }
@@ -32,7 +42,7 @@ export class AuthService {
   }
 
   public getToken(): string {
-    return localStorage.getItem('id_token');
+    return localStorage.getItem('token');
   }
 
   private authRequest(username: string, password: string, url: string): Observable<boolean> {
@@ -42,10 +52,11 @@ export class AuthService {
     return this.http.post(url, body, { headers })
                     .map((res: Response) => res.json())
                     .do((data) => {
-                      localStorage.setItem('id_token', data.access_token);
-                      this.isLoggedInSubject.next(true);
+                      localStorage.setItem('token', data.access_token);
                       let user = this.jwtHelper.decodeToken(data.access_token);
-                      return true;
+                    })
+                    .do((data) => {
+                      this.isLoggedInSubject.next(true);
                     })
                     .catch(handleError);
   }

@@ -41,14 +41,6 @@ export class AppComponent implements OnInit {
         .filter((route) => route.outlet === 'primary')
         .mergeMap((route) => route.data)
         .subscribe((event) => this.setTitle(event['title']) );
-
-      this.authService.isLoggedInObs().subscribe((isLoggedIn: boolean) => {
-        if (isLoggedIn) {
-          this.signalrService.connectToMessageHub();
-        } else {
-          this.signalrService.stopConnection();
-        }
-      });
     }
 
     public setTitle( newTitle: string) {
