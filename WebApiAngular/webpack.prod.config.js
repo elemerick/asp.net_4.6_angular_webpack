@@ -16,7 +16,7 @@ module.exports = {
     polyfills: `./polyfills.ts`,
     vendor: `./vendor.ts`,
     styles: `./css/styles.css`,
-    materialtheme: `./css/ain-material-theme.scss`
+    materialtheme: `./css/my-material-theme.scss`
   },
   context: path.join(__dirname, `src`), // make ./src folder as root for building process
   resolve: {
